@@ -35,7 +35,11 @@ const renderPdf = async ({
     await page.emulateMedia(emulateMedia);
     await page.pdf({
       ...pdfOptions,
+      headerTemplate: '<div style="display: none"></div>',
+      footerTemplate: '<p style="margin: auto;text-align: center;font-size: 8px;"><span class="pageNumber"></span>&nbsp;/&nbsp;<span class="totalPages"></span></p>',
+      displayHeaderFooter: true,
       path: path.resolve(pathToPublic),
+      margin: { left: '1cm', right: '1cm', top: '1cm', bottom: 70 }
     });
 
     return await browser.close();

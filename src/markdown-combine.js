@@ -36,7 +36,7 @@ const combineMarkdowns = ({ contents, pathToStatic, mainMdFilename }) => async l
       const content = files
         .map(processInnerLinks)
         .map(processImagesPaths({ pathToStatic }))
-        .join("\n\n\n\n");
+        .join('\n\n\n\n<div style="page-break-after:always;"></div>\n\n\n\n') // Page breaks
       await writeFile(resultFilePath, content);
     } catch (e) {
       logger.err("markdown combining error", e);
