@@ -4,6 +4,7 @@ const path = require("path");
 const logger = require("./logger.js");
 const processImagesPaths = require("./process-images-paths.js");
 const processInnerLinks = require("./process-inner-links.js");
+const processTags = require("./process-tags.js");
 
 const [readFile, writeFile, exists] = [fs.readFile, fs.writeFile, fs.exists].map(fn =>
   util.promisify(fn),
@@ -35,6 +36,7 @@ const combineMarkdowns = ({ contents, pathToStatic, mainMdFilename }) => async l
     try {
       const content = files
         .map(processInnerLinks)
+        .map(processTags)
         .map(processImagesPaths({ pathToStatic }))
         .join('\n\n\n\n<div style="page-break-after:always;"></div>\n\n\n\n') // Page breaks
       await writeFile(resultFilePath, content);
